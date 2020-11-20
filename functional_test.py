@@ -4,6 +4,8 @@ import time
 import unittest
 
 
+
+
 class NewVistorTest(unittest.TestCase):
 
     def setUp(self):
@@ -17,7 +19,6 @@ class NewVistorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
-
 
     def test_can_start_a_list_and_retriveve_it_later(self):
 
@@ -41,7 +42,7 @@ class NewVistorTest(unittest.TestCase):
 
         # She types "Buy peacock feathers" into a text box (Edith's hobyy
         # is tying fly-fishing lures)
-        inputbox.send_keys("1: Buy peacock feathers")
+        inputbox.send_keys("Buy peacock feathers")
         time.sleep(2)
 
         # when she hits enter , the page updates, and now the page lists
@@ -55,7 +56,7 @@ class NewVistorTest(unittest.TestCase):
         # She enters "Use peacock feathers to make a fly"
         # (Edith is very methodical)
         inputbox = self.browser.find_element_by_id('id_new_item')
-        inputbox.send_keys("2: Use peacock feathers to make a fly")
+        inputbox.send_keys("Use peacock feathers to make a fly")
         time.sleep(2)
         inputbox.send_keys(Keys.ENTER)
         time.sleep(2)
@@ -63,7 +64,6 @@ class NewVistorTest(unittest.TestCase):
         # The page updates again , and now shows both items on her list
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
-
 
         # self.fail('Finish the test!')
 
