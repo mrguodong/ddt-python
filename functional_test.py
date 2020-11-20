@@ -34,25 +34,43 @@ class NewVistorTest(unittest.TestCase):
 
         # She types "Buy peacock feathers" into a text box (Edith's hobyy
         # is tying fly-fishing lures)
-        inputbox.send_keys("Buy peacock feathers")
+        inputbox.send_keys("1: Buy peacock feathers")
+        time.sleep(2)
 
         # when she hits enter , the page updates, and now the page lists
         # "1: But peacock feathers" as an item in a to-do list table
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(2)
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
             any(row.text == '1: Buy peacock feathers' for row in rows),
-            "New to-do item did not appear in table"
+            f"New to-do item did not appear in table. Contents were:\n{table.text}"
         )
-
         # There is stil a text box inviting her to add another items.
         # She enters "Use peacock feathers to make a fly"
         # (Edith is very methodical)
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys("2: Use peacock feathers to make a fly")
+        time.sleep(2)
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(2)
 
-        self.fail('Finish the test!')
+        # The page updates again , and now shows both items on her list
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertTrue(
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            f"1: Buy peacock feathers  did not appear in table. Contents were:\n{table.text}"
+        )
+        self.assertTrue(
+            any(row.text == '2: Use peacock feathers to make a fly' for row in rows),
+            f"2: Use peacock feathers to make a fly did not appear in table. Contents were:\n{table.text}"
+        )
+
+
+        # self.fail('Finish the test!')
 
 
 if __name__ == '__main__':
