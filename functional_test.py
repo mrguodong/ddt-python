@@ -12,6 +12,13 @@ class NewVistorTest(unittest.TestCase):
     def tearDown(self) -> None:
         self.browser.quit()
 
+    # helper function
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
+
     def test_can_start_a_list_and_retriveve_it_later(self):
 
         # Edith has heard about a cool new online to-do app.
@@ -42,12 +49,8 @@ class NewVistorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
         time.sleep(2)
 
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows),
-            f"New to-do item did not appear in table. Contents were:\n{table.text}"
-        )
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
+
         # There is stil a text box inviting her to add another items.
         # She enters "Use peacock feathers to make a fly"
         # (Edith is very methodical)
@@ -58,16 +61,8 @@ class NewVistorTest(unittest.TestCase):
         time.sleep(2)
 
         # The page updates again , and now shows both items on her list
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows),
-            f"1: Buy peacock feathers  did not appear in table. Contents were:\n{table.text}"
-        )
-        self.assertTrue(
-            any(row.text == '2: Use peacock feathers to make a fly' for row in rows),
-            f"2: Use peacock feathers to make a fly did not appear in table. Contents were:\n{table.text}"
-        )
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
 
         # self.fail('Finish the test!')
