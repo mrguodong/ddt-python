@@ -1,3 +1,5 @@
+from datetime import time
+
 from django.test import TestCase
 from django.urls import resolve
 from django.http import HttpRequest
@@ -5,7 +7,11 @@ from lists.models import Item
 
 from lists.views import home_page
 
+MaX_WAIT = 10
+
 class HomePageTest(TestCase):
+
+
 
     def test_root_url_resolves_to_home_page_view(self):
         found = resolve('/')
@@ -64,4 +70,4 @@ class HomePageTest(TestCase):
 
         response = self.client.get('/')
         self.assertIn('itemey 1', response.content.decode())
-        self.assertIn('itemey 3', response.content.decode())
+        self.assertIn('itemey 2', response.content.decode())
