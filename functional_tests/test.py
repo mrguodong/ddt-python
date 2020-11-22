@@ -55,9 +55,15 @@ class NewVistorTest(LiveServerTestCase):
         # She enters "Use peacock feathers to make a fly"
         # (Edith is very methodical)
         inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertEqual(
+            inputbox.get_attribute(
+                'placeholder'
+            ),
+            'Enter a to-do item'
+        )
+
         inputbox.send_keys("Use peacock feathers to make a fly")
         inputbox.send_keys(Keys.ENTER)
-
         # The page updates again , and now shows both items on her list
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
         self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
