@@ -17,7 +17,10 @@ Sqllite and model related
 Git
     git commit -m "messages"
     
+    put source code into github
+    VCS -> Import into source control -> Share with Github
     
     
 Lesson Learn:
     1. Static CSS read => Spell missing caused 1 hour to debug.
+    
